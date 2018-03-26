@@ -15,6 +15,7 @@
             <param-value>UTF-8</param-value>
         </init-param>
     </filter>
+
     <filter-mapping>
         <filter-name>CharacterEncodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
@@ -38,7 +39,7 @@
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <init-param>
             <param-name>contextConfigLocation</param-name>
-            <param-value>classpath:spring-config.xml</param-value>
+            <param-value>classpath:spring-config-mvc.xml</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
@@ -54,6 +55,6 @@
     </session-config>
 
     <welcome-file-list>
-        <welcome-file>/index.jsp</welcome-file>
+        <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 </web-app>

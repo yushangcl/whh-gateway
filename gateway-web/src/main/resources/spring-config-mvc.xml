@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context.xsd
+            http://www.springframework.org/schema/aop
+            http://www.springframework.org/schema/aop/spring-aop.xsd
+            http://www.springframework.org/schema/mvc
+            http://www.springframework.org/schema/mvc/spring-mvc.xsd
+            http://www.springframework.org/schema/util
+            http://www.springframework.org/schema/util/spring-util.xsd">
+
+
+	<import resource="spring-config.xml" />
+    <import resource="spring-config-db.xml" />
+
+
+
+    <!--<bean id="stringHttpMessageConverter" class="org.springframework.http.converter.StringHttpMessageConverter">
+    </bean>-->
+
+
+    <bean id="fastJsonHttpMessageConverter"
+          class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter4">
+        <property name="supportedMediaTypes">
+            <list>
+                <value>application/json;charset=UTF-8</value>
+                <value>text/html;charset=UTF-8</value><!-- 避免IE出现下载JSON文件的情况 -->
+            </list>
+        </property>
+        <property name="fastJsonConfig">
+            <bean class="com.alibaba.fastjson.support.config.FastJsonConfig">
+                <property name="serializerFeatures">
+
+                    <list>
+                        <value>WriteMapNullValue</value>
+                        <value>WriteDateUseDateFormat</value>
+                        <value>WriteNullListAsEmpty</value>
+                        <value>WriteNullStringAsEmpty</value>
+                    </list>
+                </property>
+            </bean>
+        </property>
+    </bean>
+
+	<mvc:annotation-driven>
+		<mvc:message-converters register-defaults="false">
+			<ref bean="fastJsonHttpMessageConverter" />
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+
+	<!-- restTemplate -->
+	<!-- <bean id="restTemplate" class="org.springframework.web.client.RestTemplate"> -->
+	<!-- <property name="messageConverters"> -->
+	<!-- <list> -->
+	<!-- <ref bean="fastJsonHttpMessageConverter" /> -->
+	<!-- </list> -->
+	<!-- </property> -->
+	<!-- </bean> -->
+
+	<!-- AOP自动注解功能 -->
+	<!--<aop:aspectj-autoproxy /> -->
+
+	<!-- 静态资源映射 -->
+	<mvc:resources location="/resources/" mapping="/resources/**" />
+	<mvc:resources location="/staticImg/" mapping="/staticImg/**" />
+
+	<!-- <mvc:mapping path="/router/**" /> -->
+
+
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/view/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+</beans>

@@ -33,17 +33,19 @@ public class DubboServiceFactory {
         ClassLoader loader = DubboServiceFactory.class.getClassLoader();
 
         try {
-            prop.load(loader.getResourceAsStream("dubboconf.properties"));
+            prop.load(loader.getResourceAsStream("service-config.properties"));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         ApplicationConfig applicationConfig = new ApplicationConfig();
-        applicationConfig.setName(prop.getProperty("application.name"));
+        applicationConfig.setName(prop.getProperty("dubbo.application.name"));
+        applicationConfig.setVersion(prop.getProperty("dubbo.version.surfix"));
 
         //这里配置了dubbo的application信息*(demo只配置了name)*，因此demo没有额外的dubbo.xml配置文件
         RegistryConfig registryConfig = new RegistryConfig();
-        registryConfig.setAddress(prop.getProperty("registry.address"));
+        registryConfig.setAddress(prop.getProperty("dubbo.registry.address"));
+        registryConfig.setGroup("impl");
 
         //这里配置dubbo的注册中心信息，因此demo没有额外的dubbo.xml配置文件
         this.application = applicationConfig;
