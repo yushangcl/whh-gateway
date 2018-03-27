@@ -17,5 +17,10 @@
                                 expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
+    <bean id="appUtil" class="cn.itbat.whh.gateway.utils.ApplicationContextUtils" />
 
+    <bean id="webConfig" class="cn.itbat.whh.gateway.config.WebConfig"/>
+    <bean id="webConfigUtil" class="cn.itbat.whh.gateway.utils.WebConfigUtils">
+        <property name="configWeb" ref="webConfig"/>
+    </bean>
 </beans>

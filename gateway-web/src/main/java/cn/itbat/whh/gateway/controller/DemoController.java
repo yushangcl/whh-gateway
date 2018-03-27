@@ -26,12 +26,12 @@ public class DemoController {
         Map<String, List> paramInfos = new HashMap<>();
         paramInfos.put("paramType", list);  //后端接口参数类型
         list = new ArrayList();
-        list.add(1);
+        list.add("张三");
         paramInfos.put("paramValue", list);  //用以调用后端接口的实参
 
         DubboServiceFactory dubbo = DubboServiceFactory.getInstance();
 
-        return dubbo.genericInvoke("com.whh.spring.boot.service.CmUserService", "/user/getUserByName", paramInfos, null);
+        return dubbo.genericInvoke("com.whh.spring.boot.service.CmUserService", "getUserByName", paramInfos, null);
     }
 
 

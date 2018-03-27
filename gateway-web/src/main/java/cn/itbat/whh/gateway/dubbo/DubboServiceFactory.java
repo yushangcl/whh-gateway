@@ -5,6 +5,7 @@ import com.alibaba.dubbo.config.ReferenceConfig;
 import com.alibaba.dubbo.config.RegistryConfig;
 import com.alibaba.dubbo.config.utils.ReferenceConfigCache;
 import com.alibaba.dubbo.rpc.service.GenericService;
+import org.apache.commons.lang.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,12 +17,13 @@ import java.util.Properties;
 
 /**
  * @author huahui.wu.
- *         Created on 2018/3/19.
+ * Created on 2018/3/19.
  */
 public class DubboServiceFactory {
     private static final Logger _log = LoggerFactory.getLogger(DubboServiceFactory.class);
 
     private ApplicationConfig application;
+
     private RegistryConfig registry;
 
     private static class SingletonHolder {
@@ -33,19 +35,26 @@ public class DubboServiceFactory {
         ClassLoader loader = DubboServiceFactory.class.getClassLoader();
 
         try {
-            prop.load(loader.getResourceAsStream("service-config.properties"));
+            prop.load(loader.getResourceAsStream("web-config.properties"));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         ApplicationConfig applicationConfig = new ApplicationConfig();
+
         applicationConfig.setName(prop.getProperty("dubbo.application.name"));
-        applicationConfig.setVersion(prop.getProperty("dubbo.version.surfix"));
+        applicationConfig.setOrganization(prop.getProperty("dubbo.application.organization"));
+        applicationConfig.setOwner(prop.getProperty("dubbo.application.owner"));
 
         //这里配置了dubbo的application信息*(demo只配置了name)*，因此demo没有额外的dubbo.xml配置文件
         RegistryConfig registryConfig = new RegistryConfig();
+        //注册地址
         registryConfig.setAddress(prop.getProperty("dubbo.registry.address"));
-        registryConfig.setGroup("impl");
+        //超时时间
+        String timeout = prop.getProperty("dubbo.application.timeout");
+        registryConfig.setTimeout(NumberUtils.toInt(timeout));
+
+        registryConfig.setProtocol(prop.getProperty("dubbo.application.protocol"));
 
         //这里配置dubbo的注册中心信息，因此demo没有额外的dubbo.xml配置文件
         this.application = applicationConfig;
@@ -59,23 +68,29 @@ public class DubboServiceFactory {
 
     public Object genericInvoke(String interfaceClass, String methodName, Map<String, List> parameters, RequestParam requestParam) {
         ReferenceConfig<GenericService> reference = new ReferenceConfig<GenericService>();
-        //应用名
+
+        // 应用名
         reference.setApplication(application);
-        //zk 注册地址
+        // 注册地址
         reference.setRegistry(registry);
         // 接口名
         reference.setInterface(interfaceClass);
+        // 版本号
+        reference.setVersion("1.0.0.dev");
+        // 分组
+        reference.setGroup("impl");
+        // 协议
+        reference.setProtocol("dubbo");
         // 声明为泛化接口
         reference.setGeneric(true);
 
-        /**
-         *
+        /*
          * ReferenceConfig实例很重，封装了与注册中心的连接以及与提供者的连接，
          * 需要缓存，否则重复生成ReferenceConfig可能造成性能问题并且会有内存和连接泄漏。
          * API方式编程时，容易忽略此问题。
          * 这里使用dubbo内置的简单缓存工具类进行缓存
          */
-        ReferenceConfigCache cache = ReferenceConfigCache.getCache();
+        ReferenceConfigCache cache = ReferenceConfigCache.getCache("itbatGenerator", ReferenceKeyGenerator.keyGenerator);
         GenericService genericService = cache.get(reference);
         // 用com.alibaba.dubbo.rpc.service.GenericService可以替代所有接口引用
 

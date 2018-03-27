@@ -8,6 +8,7 @@
 
         <import resource="spring-config-redis.xml"/>
         <import resource="spring-config-component.xml"/>
+        <import resource="classpath*:spring-context-config.xml"/>
 
 
 </beans>
