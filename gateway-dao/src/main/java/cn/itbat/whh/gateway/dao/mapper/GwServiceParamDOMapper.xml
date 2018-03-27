@@ -275,4 +275,22 @@
       </foreach>
   </insert>
 
+  <select id="getGwServiceParamDTOAndFieldsWithCondition" parameterType="com.wwwarehouse.xdw.gateway.dao.model.GwServiceParamDTO"
+          resultMap="BaseResultMap">
+    select gsp.*
+    from gw_service_param gsp
+    where gsp.service_ukid = #{serviceUkid}
+    and gsp.param_parent_ukid = #{paramUkid}
+    and gsp.param_inoutype = 2
+  </select>
+
+  <select id="getGwServiceParamDTOWithCondition" parameterType="java.util.Map"
+          resultMap="gwServiceParamDTOResultMap">
+    select gsp.*
+    from gw_service_param gsp
+    where gsp.service_ukid = #{serviceUkid}
+    and gsp.param_inoutype in (0, 1)
+    order by gsp.param_order
+  </select>
+
 </mapper>

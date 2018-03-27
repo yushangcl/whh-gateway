@@ -43,10 +43,10 @@
             <appender-ref ref="CONSOLE"/>
             <appender-ref ref="DAILY-ROLL-FILE"/>
         </logger>
-        <logger name="com.whh.spring.boot" level="debug" additivity="false">
-            <appender-ref ref="CONSOLE"/>
-            <appender-ref ref="DAILY-ROLL-FILE"/>
-        </logger>
+        <!--<logger name="com.whh.spring.boot" level="debug" additivity="false">-->
+            <!--<appender-ref ref="CONSOLE"/>-->
+            <!--<appender-ref ref="DAILY-ROLL-FILE"/>-->
+        <!--</logger>-->
 
         <!-- kafka -->
         <logger name="org.apache.kafka" level="error" additivity="false">

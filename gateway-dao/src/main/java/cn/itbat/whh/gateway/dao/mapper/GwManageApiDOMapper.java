@@ -6,6 +6,7 @@ import cn.itbat.whh.gateway.dao.model.GwManageApiDO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 
 public interface GwManageApiDOMapper {
@@ -33,5 +34,7 @@ public interface GwManageApiDOMapper {
   int updateByPrimaryKeySelective(GwManageApiDO record);
 
   int updateByPrimaryKey(GwManageApiDO record);
+
+  List<GwManageApiDO> getGwManageApiWithCondition(Map<String, Object> paramMap);
 
 }

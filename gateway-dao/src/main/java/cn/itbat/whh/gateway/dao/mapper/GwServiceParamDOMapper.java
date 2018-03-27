@@ -38,4 +38,11 @@ public interface GwServiceParamDOMapper {
 
   void insertBatchParam(List<GwServiceParamDO> list);
 
+  List<GwServiceParamDO> getGwServiceParamDTOAndFieldsWithCondition(
+          GwServiceParamDTO gwServiceParamDTO);
+
+  List<GwServiceParamDTO> getGwServiceParamDTOWithCondition(Map<String, Object> paramMap);
+
+  List<GwServiceParamDO> getGwServiceParamWithCondition(Map<String, Object> paramMap);
+
 }

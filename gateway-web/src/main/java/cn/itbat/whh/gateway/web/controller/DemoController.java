@@ -1,4 +1,4 @@
-package cn.itbat.whh.gateway.controller;
+package cn.itbat.whh.gateway.web.controller;
 
 import cn.itbat.whh.gateway.dubbo.DubboServiceFactory;
 import cn.itbat.whh.gateway.model.HttpGWRequestBody;
