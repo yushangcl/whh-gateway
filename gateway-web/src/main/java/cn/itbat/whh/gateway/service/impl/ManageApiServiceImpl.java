@@ -1,7 +1,10 @@
 package cn.itbat.whh.gateway.service.impl;
 
+import cn.itbat.whh.gateway.manage.ManageApiManage;
+import cn.itbat.whh.gateway.model.RequestParam;
 import cn.itbat.whh.gateway.service.ManageApiService;
-import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.annotation.Resource;
 
 /**
  * @author log.r
@@ -9,8 +12,11 @@ import org.springframework.web.bind.annotation.RequestParam;
  **/
 public class ManageApiServiceImpl implements ManageApiService {
 
+    @Resource
+    private ManageApiManage manageApiManage;
+
     @Override
     public RequestParam getPlatformApiParam(String gateWayKey, String version) throws Exception {
-        return null;
+        return manageApiManage.getPlatformApiParam(gateWayKey,version);
     }
 }

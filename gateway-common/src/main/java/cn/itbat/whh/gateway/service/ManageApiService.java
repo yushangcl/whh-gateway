@@ -1,7 +1,5 @@
 package cn.itbat.whh.gateway.service;
 
-import org.springframework.web.bind.annotation.RequestParam;
-
 /**
  * @author huahui.wu.
  *         Created on 2018/3/20.
@@ -17,5 +15,5 @@ public interface ManageApiService {
      * @return
      * @throws Exception
      */
-    RequestParam getPlatformApiParam(String gateWayKey, String version) throws Exception;
+    cn.itbat.whh.gateway.model.RequestParam getPlatformApiParam(String gateWayKey, String version) throws Exception;
 }

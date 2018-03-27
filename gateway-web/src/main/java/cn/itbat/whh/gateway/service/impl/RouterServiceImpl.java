@@ -3,16 +3,20 @@ package cn.itbat.whh.gateway.service.impl;
 import cn.itbat.whh.gateway.constant.GatewayResultConstant;
 import cn.itbat.whh.gateway.dubbo.DubboServiceFactory;
 import cn.itbat.whh.gateway.exception.GatewayInnerException;
+import cn.itbat.whh.gateway.manage.ManageApiManage;
 import cn.itbat.whh.gateway.model.BaseResult;
 import cn.itbat.whh.gateway.model.HttpGWRequest;
 import cn.itbat.whh.gateway.model.HttpGWRequestBody;
+import cn.itbat.whh.gateway.model.RequestParam;
 import cn.itbat.whh.gateway.service.RouterService;
 import com.alibaba.dubbo.rpc.RpcException;
 import com.alibaba.dubbo.rpc.service.GenericException;
+import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Resource;
 import java.util.*;
 
 /**
@@ -22,6 +26,9 @@ import java.util.*;
 public class RouterServiceImpl implements RouterService {
 
     private static final Logger logger = LoggerFactory.getLogger(RouterServiceImpl.class);
+
+    @Resource
+    private ManageApiManage manageApiManage;
 
     @SuppressWarnings("unchecked")
     @Override
@@ -42,9 +49,23 @@ public class RouterServiceImpl implements RouterService {
             }
 
             //从数据库中查询参数定义
+            RequestParam requestParam = manageApiManage.getPlatformApiParam(key, version);
+
+            logger.info("【RequestParam】数据库方法信息 >>> "
+                    + JSON.toJSONString(requestParam));
+
+//            Map<String, List> paramMap = extracted(requestBody.getData(), requestParam, request);
+
+            logger.info("【ParamMap】参数解析结果 >>> " + JSON.toJSONString(null));
 
             DubboServiceFactory dubbo = DubboServiceFactory.getInstance();
-            Object response = dubbo.genericInvoke(null, null, null, null);
+            String interfaceName = requestParam.getClassName();
+
+            logger.info("【InterfaceName】接口全路径 >>> " + interfaceName+ "|【MethodName】方法名 >>> "
+                            + requestParam.getMethodName());
+            Object response = dubbo
+                    .genericInvoke(interfaceName, requestParam.getMethodName(), null, requestParam);
+
 
             if (response instanceof HashMap) {
                 HashMap<String, Object> hashMap = (HashMap<String, Object>) response;

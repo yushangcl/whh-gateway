@@ -1,5 +1,6 @@
 package cn.itbat.whh.gateway.dubbo;
 
+import cn.itbat.whh.gateway.model.RequestParam;
 import com.alibaba.dubbo.config.ApplicationConfig;
 import com.alibaba.dubbo.config.ReferenceConfig;
 import com.alibaba.dubbo.config.RegistryConfig;
@@ -8,7 +9,6 @@ import com.alibaba.dubbo.rpc.service.GenericService;
 import org.apache.commons.lang.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
 import java.util.List;
