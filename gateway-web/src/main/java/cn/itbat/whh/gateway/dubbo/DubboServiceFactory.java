@@ -41,7 +41,6 @@ public class DubboServiceFactory {
         }
 
         ApplicationConfig applicationConfig = new ApplicationConfig();
-
         applicationConfig.setName(prop.getProperty("dubbo.application.name"));
         applicationConfig.setOrganization(prop.getProperty("dubbo.application.organization"));
         applicationConfig.setOwner(prop.getProperty("dubbo.application.owner"));
@@ -66,6 +65,7 @@ public class DubboServiceFactory {
         return SingletonHolder.INSTANCE;
     }
 
+    @SuppressWarnings("unchecked")
     public Object genericInvoke(String interfaceClass, String methodName, Map<String, List> parameters, RequestParam requestParam) {
         ReferenceConfig<GenericService> reference = new ReferenceConfig<GenericService>();
 
@@ -106,6 +106,7 @@ public class DubboServiceFactory {
         if (invokeParamTyeps.length == 0) {
             return genericService.$invoke(methodName, new String[0], new Object[0]);
         }
+
         return genericService.$invoke(methodName, invokeParamTyeps, invokeParams);
     }
 

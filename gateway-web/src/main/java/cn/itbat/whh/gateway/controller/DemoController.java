@@ -30,8 +30,10 @@ public class DemoController {
         paramInfos.put("paramValue", list);  //用以调用后端接口的实参
 
         DubboServiceFactory dubbo = DubboServiceFactory.getInstance();
+        String interfaceClass = "com.whh.spring.boot.service.CmUserService";
+        String methodName = "getUserByName";
 
-        return dubbo.genericInvoke("com.whh.spring.boot.service.CmUserService", "getUserByName", paramInfos, null);
+        return dubbo.genericInvoke(interfaceClass, methodName, paramInfos, null);
     }
 
 
