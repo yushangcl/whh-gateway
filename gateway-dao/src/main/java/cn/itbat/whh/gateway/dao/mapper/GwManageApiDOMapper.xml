@@ -328,12 +328,6 @@
     and gma.api_version = #{apiVersion}
   </select>
 
-
-  <resultMap id="cacheApiResultMap" type="cn.itbat.whh.gateway.model.view.GwApiCache">
-    <result column="api_name" jdbcType="VARCHAR" property="apiName"/>
-    <result column="api_version" jdbcType="VARCHAR" property="apiVersion"/>
-  </resultMap>
-
   <insert id="batchInsert" parameterType="java.util.List">
     insert into gw_manage_api values
     <foreach collection="list" separator="," item="item">

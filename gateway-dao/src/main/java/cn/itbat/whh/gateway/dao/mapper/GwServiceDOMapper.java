@@ -45,11 +45,4 @@ public interface GwServiceDOMapper {
    */
   List<String> getApplicationGroups();
 
-  /**
-   * 批量添加
-   * @param list GwServiceDO集合
-   */
-  void batchInsert(List<GwServiceDO> list);
-
-  void batchDeleteByServiceUkids(List<Long> serviceUkids);
 }

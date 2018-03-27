@@ -489,24 +489,4 @@
     SELECT DISTINCT(application_group) FROM gw_service
   </select>
 
-  <insert id="batchInsert" parameterType="java.util.List">
-    insert into gw_service values
-    <foreach collection="list" separator="," item="item">
-      (
-      #{item.serviceUkid},#{item.serviceDesc},#{item.serviceType},#{item.serviceProperties}
-      ,#{item.serviceKey},#{item.serviceVersion},#{item.serviceName},#{item.applicationGroup}
-      ,#{item.isTest},#{item.testIp},#{item.testPort},#{item.isAsync},#{item.serviceRetry}
-      ,#{item.serviceGroup},#{item.asyncNotifyUrl},#{item.timeOut},now(),now()
-      )
-    </foreach>
-  </insert>
-
-
-  <delete id="batchDeleteByServiceUkids" parameterType="java.util.List">
-    delete from gw_service where service_ukid in
-    <foreach collection="list" open="(" separator="," close=")" item="item">
-      #{item}
-    </foreach>
-  </delete>
-
 </mapper>

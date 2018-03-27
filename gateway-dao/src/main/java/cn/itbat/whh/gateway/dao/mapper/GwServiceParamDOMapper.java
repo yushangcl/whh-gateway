@@ -38,22 +38,4 @@ public interface GwServiceParamDOMapper {
 
   void insertBatchParam(List<GwServiceParamDO> list);
 
-  //---------------------------------------------------------------------
-  // 中台使用
-  //---------------------------------------------------------------------
-
-  List<GwServiceParamDO> getGwServiceParamWithCondition(Map<String, Object> paramMap);
-
-  List<GwServiceParamDO> getGwServiceParamDTOAndFieldsWithCondition(
-          GwServiceParamDTO gwServiceParamDTO);
-
-  List<GwServiceParamDTO> getGwServiceParamDTOWithCondition(Map<String, Object> paramMap);
-
-  /**
-   * batch insert
-   * @param list  GwServiceParamDO 集合
-   */
-  void batchInsert(List<GwServiceParamDO> list);
-
-  void batchDeleteByServiceUkids(List<Long> serviceUkids);
 }
